@@ -1,10 +1,24 @@
 name: Summary test
 
 on: push
+
 jobs:
   log:
     runs-on: ubuntu-latest
     steps:
-      - run: |
+      - name: Random success/failure
+        id: random-check
+        run: |
+          r=$((RANDOM % 3))
+
+          if [ "$r" -eq 0 ]; then
+            exit 0
+          else
+            exit 1
+          fi
+
+      - name: Failure summary
+        if: failure()   # ランダム失敗時のみ実行
+        run: |
           echo "# 実行結果" >> "${GITHUB_STEP_SUMMARY}"
-          echo "- 成功" >> "${GITHUB_STEP_SUMMARY}"
+          echo "- 失敗 (ランダム判定)" >> "${GITHUB_STEP_SUMMARY}"
