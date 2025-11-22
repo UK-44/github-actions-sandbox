@@ -1,0 +1,10 @@
+name: Summary test
+
+on: push
+jobs:
+  log:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "# 実行結果" >> "${GITHUB_STEP_SUMMARY}"
+          echo "- 成功" >> "${GITHUB_STEP_SUMMARY}"
