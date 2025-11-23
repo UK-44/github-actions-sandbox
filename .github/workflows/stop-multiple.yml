@@ -1,6 +1,8 @@
 name: Stop multiple execution
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
 
 concurrency:
@@ -10,6 +12,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v5
-      - run: echo "Building..."
+      - name: Idle
+        run: trap "exit 0" TERM; while true; do sleep 30; done
